@@ -1,11 +1,7 @@
 import * as readline from 'node:readline/promises';
 import { homedir } from 'node:os';
 import getUserName from './helpers/getUserName.js';
-import parseCommandLine from './helpers/parseCommandLine.js';
-import up from './up.js';
-import cd from './cd.js';
-import list from './list.js';
-import { ERROR_COLOR_TEMPLATE, INVALID_INPUT_MESSAGE } from './constants.js';
+import executeCommand from './executeCommand.js';
 
 const start = () => {
   const userName = getUserName(process.argv);
@@ -18,34 +14,16 @@ const start = () => {
     output: process.stdout,
   });
 
-  console.log(`You are currently in ${pathToWorkingDirectory}`);
-  rl.prompt();
-
-  rl.on('line', async (input) => {
-    const { command, args } = parseCommandLine(input);
-    console.log(command, args);
-
-    switch (command) {
-      case '.exit':
-        rl.close();
-        return;
-      case 'ls':
-        await list(pathToWorkingDirectory);
-        break;
-      case 'cd':
-        pathToWorkingDirectory = await cd(pathToWorkingDirectory, args[0]);
-        break;
-      case 'up':
-        pathToWorkingDirectory = up(pathToWorkingDirectory);
-      case '':
-        break;
-      default:
-        console.log(ERROR_COLOR_TEMPLATE, INVALID_INPUT_MESSAGE);
-        break;
-    }
-
+  const printNewLine = () => {
     console.log(`You are currently in ${pathToWorkingDirectory}`);
     rl.prompt();
+  };
+
+  printNewLine();
+
+  rl.on('line', async (input) => {
+    pathToWorkingDirectory = await executeCommand(pathToWorkingDirectory, input, () => rl.close());
+    printNewLine();
   });
 
   rl.on('close', () => {
