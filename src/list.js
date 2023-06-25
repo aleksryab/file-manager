@@ -6,13 +6,20 @@ const list = async (pathToDir) => {
     const dirInfo = await readdir(pathToDir, { withFileTypes: true });
 
     const tabulaData = dirInfo.map((item) => {
-      const type = item.isFile() ? 'file' : 'directory';
+      let type = 'unknown';
+      if (item.isFile()) type = 'file';
+      if (item.isDirectory()) type = 'directory';
+      if (item.isSymbolicLink()) type = 'symbolic link';
       return { Name: item.name, Type: type };
     });
 
     tabulaData.sort((a, b) => (a.Type > b.Type ? 1 : b.Type > a.Type ? -1 : 0));
 
-    console.table(tabulaData);
+    if (tabulaData.length) {
+      console.table(tabulaData);
+    } else {
+      console.log('Directory is empty.');
+    }
   } catch {
     console.log(OPERATION_FAILED_MESSAGE);
   }

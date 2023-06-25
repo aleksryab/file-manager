@@ -1,14 +1,15 @@
 import * as readline from 'node:readline/promises';
 import { homedir } from 'node:os';
 import getUserName from './helpers/getUserName.js';
+import parseCommandLine from './helpers/parseCommandLine.js';
+import up from './up.js';
+import cd from './cd.js';
 import list from './list.js';
-import { INVALID_INPUT_MESSAGE } from './constants.js';
-
-const EXIT_COMMAND = '.exit';
+import { ERROR_COLOR_TEMPLATE, INVALID_INPUT_MESSAGE } from './constants.js';
 
 const start = () => {
   const userName = getUserName(process.argv);
-  const pathToWorkingDirectory = homedir();
+  let pathToWorkingDirectory = homedir();
 
   console.log(`Welcome to the File Manager, ${userName}!`);
 
@@ -21,23 +22,30 @@ const start = () => {
   rl.prompt();
 
   rl.on('line', async (input) => {
-    const command = input.trim();
-    if (command === EXIT_COMMAND) {
-      rl.close();
-    } else {
-      switch (command) {
-        case 'ls':
-          await list(pathToWorkingDirectory);
-          break;
+    const { command, args } = parseCommandLine(input);
+    console.log(command, args);
 
-        default:
-          console.log(INVALID_INPUT_MESSAGE);
-          break;
-      }
-
-      console.log(`You are currently in ${pathToWorkingDirectory}`);
-      rl.prompt();
+    switch (command) {
+      case '.exit':
+        rl.close();
+        return;
+      case 'ls':
+        await list(pathToWorkingDirectory);
+        break;
+      case 'cd':
+        pathToWorkingDirectory = await cd(pathToWorkingDirectory, args[0]);
+        break;
+      case 'up':
+        pathToWorkingDirectory = up(pathToWorkingDirectory);
+      case '':
+        break;
+      default:
+        console.log(ERROR_COLOR_TEMPLATE, INVALID_INPUT_MESSAGE);
+        break;
     }
+
+    console.log(`You are currently in ${pathToWorkingDirectory}`);
+    rl.prompt();
   });
 
   rl.on('close', () => {
