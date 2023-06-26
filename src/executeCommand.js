@@ -5,12 +5,11 @@ import up from './up.js';
 import { add, cat, cp, mv, rm, rn } from './fs/index.js';
 import os from './os/index.js';
 import hash from './crypto/hash.js';
-import { compress } from './zip/index.js';
+import { compress, decompress } from './zip/index.js';
 import { INVALID_INPUT_MESSAGE } from './constants.js';
 
 const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack) => {
   const { command, args } = parseCommandLine(commandLine);
-  console.log(command, args);
 
   switch (command) {
     case '.exit':
@@ -52,12 +51,16 @@ const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack)
     case 'compress':
       await compress(pathToWorkingDirectory, args[0], args[1]);
       break;
+    case 'decompress':
+      await decompress(pathToWorkingDirectory, args[0], args[1]);
+      break;
     case null:
       break;
     default:
       console.log(INVALID_INPUT_MESSAGE);
       break;
   }
+
   return pathToWorkingDirectory;
 };
 
