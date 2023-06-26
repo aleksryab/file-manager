@@ -1,0 +1,24 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "File Manager using Node.js APIs",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aleksryab/file-manager.git"
+  },
+  "keywords": [
+    "nodejs",
+    "file manager",
+    "cli"
+  ],
+  "author": "aleksryab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aleksryab/file-manager/issues"
+  },
+  "homepage": "https://github.com/aleksryab/file-manager#readme"
+}
