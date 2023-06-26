@@ -2,7 +2,7 @@ import parseCommandLine from './helpers/parseCommandLine.js';
 import cd from './cd.js';
 import list from './list.js';
 import up from './up.js';
-import { add, cat, rn } from './fs/index.js';
+import { add, cat, cp, rn } from './fs/index.js';
 import { INVALID_INPUT_MESSAGE } from './constants.js';
 
 const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack) => {
@@ -30,6 +30,9 @@ const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack)
       break;
     case 'rn':
       await rn(pathToWorkingDirectory, args[0], args[1]);
+      break;
+    case 'cp':
+      await cp(pathToWorkingDirectory, args[0], args[1]);
       break;
     case null:
       break;
