@@ -1,7 +1,7 @@
 import { readdir } from 'fs/promises';
-import { OPERATION_FAILED_MESSAGE } from './constants.js';
+import { OPERATION_FAILED_MESSAGE, WARNING_COLOR_TEMPLATE } from '../constants.js';
 
-const list = async (pathToDir) => {
+const ls = async (pathToDir) => {
   try {
     const dirInfo = await readdir(pathToDir, { withFileTypes: true });
 
@@ -18,11 +18,11 @@ const list = async (pathToDir) => {
     if (tabulaData.length) {
       console.table(tabulaData);
     } else {
-      console.log('Directory is empty.');
+      console.log(WARNING_COLOR_TEMPLATE, 'Directory is empty');
     }
   } catch {
     console.log(OPERATION_FAILED_MESSAGE);
   }
 };
 
-export default list;
+export default ls;

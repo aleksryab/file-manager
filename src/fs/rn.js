@@ -1,6 +1,6 @@
 import { rename } from 'node:fs/promises';
 import getAbsolutePath from '../helpers/getAbsolutePath.js';
-import isFileExist from '../helpers/isFileExist.js';
+import isPathExist from '../helpers/isPathExist.js';
 import {
   INVALID_INPUT_MESSAGE,
   OPERATION_FAILED_MESSAGE,
@@ -17,7 +17,7 @@ const rn = async (pathToWorkingDirectory, pathToFile, newFileName) => {
     const oldPathToFile = getAbsolutePath(pathToWorkingDirectory, pathToFile);
     const newPathToFile = getAbsolutePath(pathToWorkingDirectory, newFileName);
 
-    if (await isFileExist(newPathToFile)) throw new Error(OPERATION_FAILED_MESSAGE);
+    if (await isPathExist(newPathToFile)) throw new Error(OPERATION_FAILED_MESSAGE);
 
     await rename(oldPathToFile, newPathToFile);
     console.log(SUCCESS_COLOR_TEMPLATE, `File renamed: ${newPathToFile}`);

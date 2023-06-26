@@ -1,6 +1,6 @@
 import { stat } from 'node:fs/promises';
-import { ERROR_COLOR_TEMPLATE, OPERATION_FAILED_MESSAGE } from './constants.js';
-import getAbsolutePath from './helpers/getAbsolutePath.js';
+import { ERROR_COLOR_TEMPLATE, OPERATION_FAILED_MESSAGE } from '../constants.js';
+import getAbsolutePath from '../helpers/getAbsolutePath.js';
 
 const cd = async (currentPathToWorkingDir, pathToTargetDir) => {
   if (!pathToTargetDir) return currentPathToWorkingDir;

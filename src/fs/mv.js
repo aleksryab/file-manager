@@ -1,9 +1,9 @@
 import { rm } from 'node:fs/promises';
 import getAbsolutePath from '../helpers/getAbsolutePath.js';
-import { copyFile } from './cp.js';
+import copyFile from './copyFile.js';
 import {
+  ERROR_COLOR_TEMPLATE,
   INVALID_INPUT_MESSAGE,
-  OPERATION_FAILED_MESSAGE,
   SUCCESS_COLOR_TEMPLATE,
 } from '../constants.js';
 
@@ -19,7 +19,7 @@ const mv = async (pathToWorkingDirectory, pathToFile, pathToNewDir) => {
     await rm(absolutePathToFile);
     console.log(SUCCESS_COLOR_TEMPLATE, `File moved: ${pathToCopyFile}`);
   } catch (err) {
-    console.log(OPERATION_FAILED_MESSAGE);
+    console.log(ERROR_COLOR_TEMPLATE, `Operation failed: ${err.message}`);
   }
 };
 

@@ -3,7 +3,7 @@ import { createBrotliCompress } from 'node:zlib';
 import { pipeline } from 'node:stream/promises';
 import { join, parse } from 'node:path';
 import getAbsolutePath from '../helpers/getAbsolutePath.js';
-import isFileExist from '../helpers/isFileExist.js';
+import isPathExist from '../helpers/isPathExist.js';
 import {
   INVALID_INPUT_MESSAGE,
   OPERATION_FAILED_MESSAGE,
@@ -32,8 +32,8 @@ const compress = async (pathToWorkingDirectory, pathToFile, pathToDestination = 
       archivePath += archiveExt;
     }
 
-    if (!(await isFileExist(absolutePathToFile))) throw new Error('No such file');
-    if (await isFileExist(archivePath)) throw new Error('File already exists');
+    if (!(await isPathExist(absolutePathToFile))) throw new Error('No such file');
+    if (await isPathExist(archivePath)) throw new Error('File already exists');
 
     await pipeline(
       createReadStream(absolutePathToFile),

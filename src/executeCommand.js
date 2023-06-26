@@ -1,7 +1,5 @@
 import parseCommandLine from './helpers/parseCommandLine.js';
-import cd from './cd.js';
-import list from './list.js';
-import up from './up.js';
+import { cd, up, ls } from './nav/index.js';
 import { add, cat, cp, mv, rm, rn } from './fs/index.js';
 import os from './os/index.js';
 import hash from './crypto/hash.js';
@@ -16,7 +14,7 @@ const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack)
       exitCallBack();
       break;
     case 'ls':
-      await list(pathToWorkingDirectory);
+      await ls(pathToWorkingDirectory);
       break;
     case 'cd':
       pathToWorkingDirectory = await cd(pathToWorkingDirectory, args[0]);
@@ -42,9 +40,6 @@ const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack)
     case 'rm':
       await rm(pathToWorkingDirectory, args[0]);
       break;
-    case 'os':
-      os(args[0]);
-      break;
     case 'hash':
       await hash(pathToWorkingDirectory, args[0]);
       break;
@@ -53,6 +48,9 @@ const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack)
       break;
     case 'decompress':
       await decompress(pathToWorkingDirectory, args[0], args[1]);
+      break;
+    case 'os':
+      os(args[0]);
       break;
     case null:
       break;

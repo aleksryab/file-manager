@@ -3,7 +3,7 @@ import { createBrotliDecompress } from 'node:zlib';
 import { pipeline } from 'node:stream/promises';
 import { join, parse } from 'node:path';
 import getAbsolutePath from '../helpers/getAbsolutePath.js';
-import isFileExist from '../helpers/isFileExist.js';
+import isFileExist from '../helpers/isPathExist.js';
 import {
   INVALID_INPUT_MESSAGE,
   OPERATION_FAILED_MESSAGE,
