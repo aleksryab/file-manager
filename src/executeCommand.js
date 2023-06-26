@@ -4,6 +4,7 @@ import list from './list.js';
 import up from './up.js';
 import { add, cat, cp, mv, rm, rn } from './fs/index.js';
 import os from './os/index.js';
+import hash from './crypto/hash.js';
 import { INVALID_INPUT_MESSAGE } from './constants.js';
 
 const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack) => {
@@ -43,6 +44,9 @@ const executeCommand = async (pathToWorkingDirectory, commandLine, exitCallBack)
       break;
     case 'os':
       os(args[0]);
+      break;
+    case 'hash':
+      await hash(pathToWorkingDirectory, args[0]);
       break;
     case null:
       break;
