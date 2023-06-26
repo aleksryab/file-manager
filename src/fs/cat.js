@@ -2,15 +2,11 @@ import { createReadStream } from 'node:fs';
 import { finished } from 'node:stream/promises';
 import { EOL } from 'node:os';
 import getAbsolutePath from '../helpers/getAbsolutePath.js';
-import {
-  ERROR_COLOR_TEMPLATE,
-  INVALID_INPUT_MESSAGE,
-  OPERATION_FAILED_MESSAGE,
-} from '../constants.js';
+import { INVALID_INPUT_MESSAGE, OPERATION_FAILED_MESSAGE } from '../constants.js';
 
 const cat = async (pathToWorkingDirectory, pathToFile) => {
   if (!pathToFile) {
-    console.log(ERROR_COLOR_TEMPLATE, INVALID_INPUT_MESSAGE);
+    console.log(INVALID_INPUT_MESSAGE);
     return;
   }
 
@@ -22,7 +18,7 @@ const cat = async (pathToWorkingDirectory, pathToFile) => {
     await finished(readableStream);
     process.stdout.write(EOL);
   } catch {
-    console.log(ERROR_COLOR_TEMPLATE, OPERATION_FAILED_MESSAGE);
+    console.log(OPERATION_FAILED_MESSAGE);
   }
 };
 
