@@ -7,7 +7,7 @@ const start = () => {
   const userName = getUserName(process.argv);
   let pathToWorkingDirectory = homedir();
 
-  console.log(`Welcome to the File Manager, ${userName}!`);
+  console.log('\x1b[35m%s\x1b[0m', `Welcome to the File Manager, ${userName}!`);
 
   const rl = readline.createInterface({
     input: process.stdin,
@@ -15,7 +15,7 @@ const start = () => {
   });
 
   const printNewLine = () => {
-    console.log(`You are currently in ${pathToWorkingDirectory}`);
+    console.log('\x1b[36m%s\x1b[0m', `You are currently in ${pathToWorkingDirectory}`);
     rl.prompt();
   };
 
@@ -27,7 +27,7 @@ const start = () => {
   });
 
   rl.on('close', () => {
-    console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
+    console.log('\x1b[35m%s\x1b[0m', `Thank you for using File Manager, ${userName}, goodbye!`);
     process.exit(0);
   });
 };
